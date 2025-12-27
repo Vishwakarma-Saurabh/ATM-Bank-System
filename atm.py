@@ -2,18 +2,56 @@ from storage import save_account, load_accounts
 from bank_account import BankAccount
 
 
+def get_input(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Please enter a valid number")
+
+
+def get_positive_input(prompt):
+    while True:
+        try:
+            value = int(input(prompt))
+            if value < 0:
+                print("Value must be non-negative")
+            else:
+                return value
+        except ValueError:
+            print("Please enter a valid number")
+            
+def get_holder_name(prompt):
+    while True:
+        name = input(prompt).strip()
+
+        if not name:
+            print("Holder name cannot be empty")
+        elif not name.replace(" ", "").isalpha():
+            print("Holder name must contain only letters") 
+        else:
+            return name
+
 def create_account():
-    acc_no = int(input("Account number:"))
-    pin = int(input("Enter PIN: "))
-    holder = input("Holder name: ")
-    balance = int(input("Initial balance: "))
+    acc_no = get_input("Account number: ")
+    
+    if load_accounts(acc_no):
+        print("Account number already exists!")
+        return
+    
+    pin = get_input("Enter PIN: ")
+    holder = get_holder_name("Holder name: ")
+    balance = get_positive_input("Initial balance: ")
     account = BankAccount(acc_no, pin, holder, balance)
-    save_account(account)
-    print("Account created successfully")
+    try:
+        save_account(account)
+        print("Account created successfully")
+    except ValueError as e:
+        print(e)
 
 def login():
-    acc_no = int(input("Enter your account number: "))
-    pin = int(input("Enter PIN: "))
+    acc_no = get_input("Enter your account number: ")
+    pin = get_input("Enter PIN: ")
     accounts = load_accounts(acc_no)
     if accounts and accounts.verify_pin(pin):
         print("Logged in successfully")
@@ -37,38 +75,38 @@ def main_menu():
     
 while True:
     menu()
-    choice = int(input("Enter your choice: "))
+    choice = get_input("Enter your choice: ")
 
     if choice == 1:
         current_account = login()
         if current_account:
             while True:
                 main_menu()
-                choice = int(input("Enter choice: "))
+                choice = get_input("Enter choice: ")
 
                 if choice == 1:
-                    amount = int(input("Enter amount to deposit: "))
+                    amount = get_positive_input("Enter amount to deposit: ")
                     current_account.deposit(amount)
-                    save_account(current_account)
+                    save_account(current_account, allow_update=True)
                     print(f"Deposited {amount} successfully")
 
                 elif choice == 2:
-                    amount = int(input("Enter the amount to withdraw: "))
+                    amount = get_positive_input("Enter the amount to withdraw: ")
                     current_account.withdraw(amount)
-                    save_account(current_account)
+                    save_account(current_account, allow_update=True)
                     print(f"Withdrew {amount} successfully")
 
                 elif choice == 3:
-                    target_acc_no = int(input("Enter recipient account number: "))
+                    target_acc_no = get_input("Enter recipient account number: ")
                     target_account = load_accounts(target_acc_no)
 
                     if not target_account:
                         print("Recipient account does not exist.")
                     else:
-                        amount = int(input("Enter amount to transfer: "))
+                        amount = get_positive_input("Enter amount to transfer: ")
                         if current_account.transfer(target_account, amount):
-                            save_account(current_account)
-                            save_account(target_account)
+                            save_account(current_account, allow_update=True)
+                            save_account(target_account, allow_update=True)
                             print(f"Transferred {amount} to account {target_acc_no} successfully")
 
                 elif choice == 4:

@@ -4,15 +4,18 @@ from bank_account import BankAccount
 
 FILE = "data.json"
 
-def save_account(account):
+def save_account(account, allow_update=False):
     accounts = load_all_accounts()
     accounts_dict = {acc.account_number: acc for acc in accounts}
-    accounts_dict[account.account_number] = account
+    
+    if not allow_update and account.account_number in accounts_dict:
+        raise ValueError("Account number already exists!")
 
+    accounts_dict[account.account_number] = account
     with open(FILE, "w") as file:
         json.dump(
             {
-                acc_no: {
+                str(acc_no): {
                     "pin": acc.get_pin(),
                     "holder": acc.holder,
                     "balance": acc.balance,
