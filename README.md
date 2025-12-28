@@ -1,91 +1,138 @@
-ATM Bank System (Python)
+# Bank Management System (Python CLI)
 
-This is a simple ATM / Bank simulation program written in Python.
+A simple **command-line Bank Management System** built using Python.  
+This project supports **user accounts and admin accounts**, with proper input validation and error handling.
 
-It allows users to create bank accounts and perform basic banking operations.
+----------------------------
 
-All data is saved in a file so accounts are not lost when the program closes.
+🚀 Features
 
-
-🔵🔵🔵      Current Features :- 
-
-
-✅ Create a new bank account
-
-✅ Login using account number and PIN
-
-✅ Deposit money
-
-✅ Withdraw money
-
-✅ Check account balance
-
-✅ View transaction history with date and time
-
-✅ Transfer money between accounts
-
-✅ Data persistence using a JSON file
+---------------------------
 
 
-
-🟡🟡🟡      Upcoming Features :-
-
-
-⏳ Better input validation (prevent crashes on wrong input)
-
-⏳ Account deletion option
-
-⏳ Change PIN feature
-
-⏳ Admin view for all accounts
-
-⏳ Interest calculation
-
-⏳ Improved security (hashed PINs)
-
-⏳ GUI version (using Tkinter)
-
-⏳ Unit tests
+👤 User Features
 
 
-🟠🟠🟠  Run program :-
+Create a bank account
+
+Login using account number and PIN
+
+Deposit money
+
+Withdraw money
+
+Transfer money to another account
+
+View balance
+
+View transaction history
+
+----------------------------
 
 
-⬜ Step 1.
-
-Clone the repository or download the files:
-
-git clone https://github.com/yourusername/ATM-Bank-System.git
+🛠️ Admin Features
 
 
-⬜ Step 2.
+Admin login
 
-Go to the project folder:
+Supreme admin initialization on first run
 
-cd ATM-Bank-System
+Create admin accounts (only by existing admins)
+
+View all bank accounts
+
+Delete user accounts
+
+Update user name
+
+Reset user PIN
+
+----------------------------
 
 
-⬜ Step 3.
+🔐 Validation & Safety
 
-Run the program:
+
+Validates account number format
+
+Validates PIN format
+
+Prevents duplicate accounts
+
+Prevents invalid transactions
+
+Handles errors without crashing
+
+Ensures only authorized admins can create new admins
+
+-----------------------------
+
+
+📂 Project Structure
+
+
+ATM_Project/
+│
+├── atm.py                  # Main program (menus & flow)
+├── setup_admin.py          # One-time supreme admin creation 
+├── bank_account.py         # BankAccount class
+│
+├── admin.py                # Admin class
+├── admin_storage.py        # Save/load admins
+│
+├── storage.py              # Save/load bank accounts
+├── validation.py           # All validations
+│
+├── data.json               # User accounts data
+├── admins.json             # Admin accounts data
+
+
+------------------------------
+
+
+▶️ How to Run
+
+
+Make sure Python is installed (Python 3.8+ recommended)
+
+Clone the repository
+
+Initialize the Supreme Admin (first run only):
+
+python setup_admin.py
+
+
+This will create the supreme admin account, which has full control over admin creation.
+
+Run the main program:
 
 python atm.py
 
-(Replace atm.py with your main file name if different.)
+Log in as the supreme admin to create other admin accounts.
+
+Only existing admins (including the supreme admin) can create new admin accounts.
 
 
+-------------------------------
 
-🔴🔴🔴 Project Structure
+
+📚 Future Improvements
 
 
-➡ bank_account.py → BankAccount class and account logic
+Hash PINs and passwords for security
 
-➡ storage.py → Saving and loading accounts from file
+Add account freeze feature
 
-➡ atm.py → Main program (menus and user interaction)
+Add unit tests
 
-➡ data.json → Stored account data
+Create a GUI version
 
+Email/mobile verification for users
+
+Automatic account number generation
+
+
+-------------------------------
 
 Author
 

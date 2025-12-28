@@ -22,12 +22,10 @@ def save_account(account, allow_update=False):
                     "history": acc.history
                 }
                 for acc_no, acc in accounts_dict.items()
-            },
-            file,
-            indent=4
+            }, file, indent=4
         )
 
-def load_accounts(acc_no):
+def load_account(acc_no):
     if not os.path.exists(FILE):
         return None
 

@@ -1,0 +1,3 @@
+from admin_storage import initialize_supreme_admin
+
+initialize_supreme_admin()

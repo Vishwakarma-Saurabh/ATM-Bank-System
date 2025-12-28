@@ -13,14 +13,21 @@ class BankAccount:
         self.history.append(f"[{time}] {action}")
 
     def deposit(self, amount):
-        if amount > 0:
-            self.balance += amount
-            self._add_history(f"Deposited: {amount}")
+        if amount <= 0:
+            raise ValueError("Deposit amount must be positve")
+            
+        self.balance += amount
+        self._add_history(f"Deposited: {amount}")
 
     def withdraw(self, amount):
-        if 0 < amount <= self.balance:
-            self.balance -= amount
-            self._add_history(f"Withdrew: {amount}")
+        if amount <= 0:
+            raise ValueError("Withdrawal amount must be positive")
+
+        if amount > self.balance:
+            raise ValueError("Insufficient balance")
+
+        self.balance -= amount
+        self._add_history(f"Withdrew: {amount}")
 
     def get_balance(self):
         return self.balance
@@ -34,21 +41,18 @@ class BankAccount:
     def get_pin(self):
         return self.__pin
 
+    def set_pin(self, new_pin):
+        self.__pin = new_pin
+
     def transfer(self, target_account, amount):
         if amount <= 0:
-            print("Transfer amount must be positive.")
-            return False
+            raise ValueError("Transfer amount must be positive")
 
         if amount > self.balance:
-            print("Insufficient balance.")
-            return False
+            raise ValueError("Insufficient balance")
 
-        # Deduct from sender
         self.balance -= amount
         self._add_history(f"Transferred {amount} to account {target_account.account_number}")
 
-        # Add to receiver
         target_account.balance += amount
         target_account._add_history(f"Received {amount} from account {self.account_number}")
-
-        return True
