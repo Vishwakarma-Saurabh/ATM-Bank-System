@@ -1,5 +1,3 @@
-
-import pickle
 import os
 import json
 from admin import Admin
@@ -36,9 +34,9 @@ def load_admins():
 def initialize_supreme_admin():
     admins = load_admins()
     if not admins:
-        print("No admin found. Create Supreme Admin")
+        print("🚫 No admin found. Create Supreme Admin")
         username = input("Supreme admin username: ")
         password = input("Supreme admin password: ")
-        supreme = Admin(username, password, role="supreme")
+        supreme = Admin(username, password, role="Supreme")
         save_admin(supreme)
         print("Supreme Admin created successfully")

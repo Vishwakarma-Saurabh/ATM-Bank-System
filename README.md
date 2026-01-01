@@ -13,7 +13,9 @@ This project supports **user accounts and admin accounts**, with proper input va
 👤 User Features
 
 
-Create a bank account
+Create a bank account with all essential field input
+
+Automatically unique account number creation
 
 Login using account number and PIN
 
@@ -26,6 +28,8 @@ Transfer money to another account
 View balance
 
 View transaction history
+
+Account type information ("Savings", "Current", "Fixed", "Recurring") with validation that allows/denies transaction
 
 ----------------------------
 
@@ -47,11 +51,15 @@ Update user name
 
 Reset user PIN
 
+Change account status ("Active", "Inactive", "Closed", "Frozen", "Closed")
+
 ----------------------------
 
 
 🔐 Validation & Safety
 
+
+Validation for all input data
 
 Validates account number format
 
@@ -63,7 +71,7 @@ Prevents invalid transactions
 
 Handles errors without crashing
 
-Ensures only authorized admins can create new admins
+Ensures only authorized admins can create new admins & change account status
 
 -----------------------------
 
@@ -128,8 +136,6 @@ Add unit tests
 Create a GUI version
 
 Email/mobile verification for users
-
-Automatic account number generation
 
 
 -------------------------------
